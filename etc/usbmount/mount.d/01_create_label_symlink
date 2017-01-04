@@ -1,0 +1,22 @@
+#!/bin/sh
+####################
+# Car Media Server #
+####################
+
+set -e
+
+ 
+# Exit if device or mountpoint is empty.
+test -z "$UM_DEVICE" && test -z "$UM_MOUNTPOINT" && exit 0
+ 
+# get volume label name
+label=`blkid -s LABEL -o value $UM_DEVICE`
+ 
+echo $label
+
+# Looking for device with the PLEX label. If PLEX label detected then we create symlink
+if [ "$label"=='PLEX' ]; then
+  ln -sf "$UM_MOUNTPOINT" "/media/PLEX"
+fi
+
+exit 0
